@@ -80,7 +80,7 @@
                         </li>
                         {% endfor %}
                         
-                        <li class="page-item {% if not has_next %}disabled{% endif %}">
+                        <li class="page-item {% if not has_next %}disabled{% endif %}" data-testid="next-page">
                             <a class="page-link" href="?page={{ current_page|add:'1' }}">Next</a>
                         </li>
                     </ul>

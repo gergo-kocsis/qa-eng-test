@@ -97,3 +97,24 @@ def create_task(page: Page, taskName):
         this test will fail. In the future, this should also check for incremented time.
     """
     expect(newTask.locator("[data-testid='list-element-info']").nth(0)).to_have_text("Created by: " + userName + " | " + time)
+
+def mark_task_completed(page: Page, elementName: str):
+    # TODO: Create get_list_element_by_name
+    element = page.get_by_test_id("list-element-title").get_by_text(elementName)
+    expect(element).to_have_count(1)
+
+    # Mark todo entry as completed
+    listEntry = element.locator("xpath=../..")
+    listEntry.locator("> [data-testid='list-element-options']").locator("> [data-testid='list-element-complete']").click()
+
+    # Check that it was marked completed 
+    element = page.get_by_test_id("list-element-title").get_by_text(elementName)
+    expect(element).to_have_class("text-decoration-line-through text-muted")
+
+    # TODO: Create function to check any generic notification existance
+    expect(page.get_by_text("Task marked as completed!")).to_be_visible()
+
+def assert_tasks_on_page(page: Page, taskNames: list[str]):
+    for name in taskNames:
+        element = page.get_by_test_id("list-element-title").get_by_text(name)
+        expect(element).to_have_count(1)

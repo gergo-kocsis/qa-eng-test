@@ -1,4 +1,5 @@
 from playwright.sync_api import Page, expect
+import datetime
 
 def login(page: Page, username, password, validLogin = True):
     # Ensure we are on the right page
@@ -66,4 +67,26 @@ def before_hook(page: Page, username, password):
     cleanup_previous_tasks(page)
 
 def create_task(page: Page, taskName):
-    
+
+    # Create new task
+    page.get_by_test_id("new-task-name-input").fill(taskName)
+    page.get_by_test_id("new-task-create-button").click()
+    time = datetime.datetime.now().strftime("%b %d, %Y %H:%M") # Save time for verification later
+
+    # Assert new task has been created
+    expect(page.get_by_text("Task added successfully!")).to_be_visible()
+    newTask = page.get_by_test_id("task-list").locator("> [data-testid='list-element']").nth(0)
+
+    # Check name of new task
+    expect(newTask.locator("[data-testid='list-element-title']").nth(0)).to_have_text(taskName) 
+
+    # Check details of new task
+    userName = page.get_by_test_id("user-greeting").text_content() # This gets "Hello, <user>!" and extracts the username
+    userName = userName[7:]
+    userName = userName[:-1]
+
+    """
+        Very unlikely flake - should the submission of task and getting date fall in different minutes
+        this test will fail. In the future, this should also check for incremented time.
+    """
+    expect(newTask.locator("[data-testid='list-element-info']").nth(0)).to_have_text("Created by: " + userName + " | " + time)

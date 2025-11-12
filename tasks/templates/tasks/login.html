@@ -14,7 +14,8 @@
                         <label for="{{ form.username.id_for_label }}" class="form-label">Username</label>
                         <input type="text" 
                                class="form-control" 
-                               id="{{ form.username.id_for_label }}" 
+                               id="{{ form.username.id_for_label }}"
+                               data-testid="username-input"
                                name="username" 
                                required>
                     </div>
@@ -23,10 +24,11 @@
                         <input type="password" 
                                class="form-control" 
                                id="{{ form.password.id_for_label }}" 
+                               data-testid="passowrd-input"
                                name="password" 
                                required>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                    <button type="submit" class="btn btn-primary w-100", data-testid="login-button">Login</button>
                 </form>
                 
                 <div class="mt-4 text-center text-muted">

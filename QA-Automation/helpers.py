@@ -26,3 +26,27 @@ def login(page: Page, username, password, validLogin = True):
 
     else:
         expect(page.get_by_text("Invalid username or password.")).to_be_visible()
+
+"""
+    Previous tests may have failed and left unwanted tasks behind. To prevent test-interferance with previous
+    attempts, first check to see if there are any unwanted items, then delete any that are found.
+"""
+def cleanup_previous_tasks(page: Page):
+    # Ensure we are on the correct page
+    expect(page).to_have_title('Dashboard - Todo App')
+
+    # Get task list and check for any children
+    taskList = page.get_by_test_id("task-list")
+    children = taskList.locator("> [data-testid='list-element']") # Get all relevant children
+    
+    # If there are any leftover tasks from previous tests, delete these
+    while(children.count() > 0):
+        delete_element(page, children.nth(0))
+        children = taskList.locator("> [data-testid='list-element']") # Get all relevant children
+
+    # Ensure all elements have been successfully deleted
+    expect(children).to_have_count(0)
+
+def delete_element(page: Page, element):
+    element.locator("> [data-testid='list-element-options']").locator("> [data-testid='list-element-delete']").click()
+    expect(page.get_by_text("Task deleted successfully!")).to_be_visible()

@@ -1,4 +1,4 @@
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Page, expect, Locator
 import datetime
 
 def login(page: Page, username, password, validLogin = True):
@@ -42,16 +42,23 @@ def cleanup_previous_tasks(page: Page):
     
     # If there are any leftover tasks from previous tests, delete these
     while(children.count() > 0):
-        delete_element(page, children.nth(0))
+        delete_task(page, children.nth(0))
         children = taskList.locator("> [data-testid='list-element']") # Get all relevant children
 
     # Ensure all elements have been successfully deleted
     expect(children).to_have_count(0)
     expect(page.get_by_text("No tasks yet. Add your first task above!")).to_be_visible()
 
-def delete_element(page: Page, element):
+def delete_task(page: Page, element):
     element.locator("> [data-testid='list-element-options']").locator("> [data-testid='list-element-delete']").click()
     expect(page.get_by_text("Task deleted successfully!")).to_be_visible()
+
+def delete_task_by_name(page: Page, elementName: str):
+    element = page.get_by_test_id("list-element-title").get_by_text(elementName)
+    expect(element).to_have_count(1)
+
+    """ I would much more prefer to use the Cypress style .parents(<selector>), since xpath is bad practice """
+    delete_task(page, element.locator("xpath=../.."))
 
 """
     Collection of helper functions that need to run before most (if not all) tests.

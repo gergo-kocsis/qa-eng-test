@@ -50,6 +50,10 @@ def dashboard_view(request):
             if title:
                 Task.objects.create(user=request.user, title=title)
                 messages.success(request, 'Task added successfully!')
+
+            # ADDITION: There was no error message for this - also no css for error
+            else:
+                messages.error(request, 'Task title is invalid!')
             return redirect('dashboard')
         
         elif action == 'complete':
@@ -73,7 +77,9 @@ def dashboard_view(request):
                 messages.error(request, 'Task not found.')
             return redirect('dashboard')
     
-    tasks = Task.objects.all()
+    # BUG: This will get all tasks, not just the tasks of the current user
+    # tasks = Task.objects.all()
+    tasks = Task.objects.filter(user=request.user)
 
     # Get page number from query params (default to 0)
     try:
@@ -89,7 +95,9 @@ def dashboard_view(request):
     if page == 0:
         paginated_tasks = tasks[start:end]
     else:
-        start = (page + 1) * ITEMS_PER_PAGE
+        # BUG: This is trying to load the next page
+        # start = (page + 1) * ITEMS_PER_PAGE
+        start = (page) * ITEMS_PER_PAGE
         end = start + ITEMS_PER_PAGE
         paginated_tasks = tasks[start:end]
 

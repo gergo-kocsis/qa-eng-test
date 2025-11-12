@@ -32,12 +32,13 @@ def test_login(page: Page):
     logout(page)
     login(page, "user2", "password321")
 
-    # Assert no items
-    expect(page.get_by_test_id("task-list")).to_have_count(0)
-    expect(page.get_by_text("No tasks yet. Add your first task above!")).to_be_visible()
+    # Assert only expected items found
+    assert_tasks_on_page(page, ["this is the only user2 task"])
+    expect(page.get_by_test_id("task-list").locator("> [data-testid='list-element']")).to_have_count(1)
 
     """
-        NOTE: Test would start failing, if someone accidentally creates any tasks on user2.
+        NOTE: Test will start failing, if someone accidentally creates 
+        any tasks or deletes the expected one on user2.
     """
 
     # Now sign back into user1 to assert task permanence

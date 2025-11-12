@@ -3,7 +3,7 @@ import pytest
 from playwright.sync_api import Page, expect
 from helpers import before_hook, create_task, delete_task_by_name, mark_task_completed, assert_tasks_on_page, logout, login, cleanup_previous_tasks
 
-def test_login(page: Page):
+def test_functionality(page: Page):
     before_hook(page, "user1", "password123") # Credentials should ideally be stored in .env file
     
     # Simple create and delete task

@@ -46,7 +46,24 @@ def cleanup_previous_tasks(page: Page):
 
     # Ensure all elements have been successfully deleted
     expect(children).to_have_count(0)
+    expect(page.get_by_text("No tasks yet. Add your first task above!")).to_be_visible()
 
 def delete_element(page: Page, element):
     element.locator("> [data-testid='list-element-options']").locator("> [data-testid='list-element-delete']").click()
     expect(page.get_by_text("Task deleted successfully!")).to_be_visible()
+
+"""
+    Collection of helper functions that need to run before most (if not all) tests.
+"""
+def before_hook(page: Page, username, password):
+    # Visit baseurl (ideally an env variable)
+    page.goto("http://127.0.0.1:8000/login/")
+
+    # Log in
+    login(page, username, password)
+
+    # Ensure clean environment to run test
+    cleanup_previous_tasks(page)
+
+def create_task(page: Page, taskName):
+    

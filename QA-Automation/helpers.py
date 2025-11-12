@@ -118,3 +118,7 @@ def assert_tasks_on_page(page: Page, taskNames: list[str]):
     for name in taskNames:
         element = page.get_by_test_id("list-element-title").get_by_text(name)
         expect(element).to_have_count(1)
+
+def logout(page: Page):
+    page.get_by_test_id("logout").click()
+    assert page.url == "http://127.0.0.1:8000/login/"

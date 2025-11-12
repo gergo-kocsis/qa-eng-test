@@ -21,7 +21,7 @@
             {% if user.is_authenticated %}
             <div class="navbar-nav ms-auto">
                 <span class="navbar-text me-3" data-testid="user-greeting">Hello, {{ user.username }}!</span>
-                <a class="btn btn-outline-light btn-sm" href="{% url 'logout' %}">Logout</a>
+                <a class="btn btn-outline-light btn-sm" href="{% url 'logout' %}" data-testid="logout">Logout</a>
             </div>
             {% endif %}
         </div>

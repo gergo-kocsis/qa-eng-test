@@ -1,6 +1,16 @@
 # Hello
+gergo_kocsis@outlook.com | [LinkedIn](https://www.linkedin.com/in/gergo-kocsis-71252b181/) | [Website](https://gergokocsis.wixsite.com/portfolio)
+
 ## TL;DR
-Please find my submission here. My test lives in `QA-Automation/tests.py`. From root run `pytest -v QA-Automation/tests.py` headlessly, or `pytest -v QA-Automation/tests.py --headed` if you wanna see what's going on.
+Please find my submission here. My test lives in `QA-Automation/tests.py`. From root run `pytest -v QA-Automation/tests.py` headlessly, or `pytest -v QA-Automation/tests.py --headed` if you wanna see what's going on. Helper functions are in `QA-Automation/helpers.py`.
+
+## Overview
+I used Playwright. I wanted to use Cypress, so I emailed Cal, but I also didn't wanna miss the submission deadline, so after a few days of waiting, I started it in Playwright. I have never used this before, but I found most of my Cypress skills were directly transferable. If you look at the timings of my commits, I want to mention that I had trouble with my Python setup and spent a lot of time on it (of course, it was Microsoft's fault)
+
+There should be 2 users, which I think should automatically set up, but if they are not, we have:
+- user1, password123
+- user2, password321
+
 ## Test architecture
 In the original readme, under [Test Coverage Expectations](https://github.com/CydarLtd/qa-automation-interview?tab=readme-ov-file#test-coverage-expectations), 4 bullet points were listed. This makes me think you were expecting at least 4 separate tests. However, I created only one test, which covers all of those areas (and some more). Let's now argue about why I did it this way *(I know I'm about to argue with myself, but I will imagine the counterpoints)*
 
@@ -96,3 +106,7 @@ if title:
 +     messages.error(request, 'Task title is invalid!')
 return redirect('dashboard')
 ```
+## Final thoughts
+I left todo comments in the code so you can see what else I wanted to do. I also didn't worry too much about the project structure -- all my focus went into the test integration.
+
+I may have got a bit carried away, but this test project took me back to my placement, which I very much enjoyed, so thank you for this opportunity. If you have any questions or you want to talk to me about my choices/architecture, shoot me an email. I look forward to hearing from you!

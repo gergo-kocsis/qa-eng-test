@@ -51,6 +51,27 @@ If we see it, we should probably fix it, but spending test coverage on this woul
 - [ ] Attempting to log in with bogus creds
 - [ ] Once logged in, the correct user is logged not (not somehow a different user)
 
+## Best practices
+I'm getting carried away, and you are probably falling asleep, so I'll make this a turbo round. 
+
+**Done:**
+- [x] Common functionality abstracted into helper functions
+- [x] Selectors using `data-testid` not some role or class
+  - These can change at any time during development, so these are not reliable and would make tests potentially flaky
+  - I added these testids to the elements
+- [x] Asserting functionality to check the page is in an expected state
+  - I.e. if stuff took some time to happen, these checks will ensure stuff already happened instead of hard-coded waits
+- [x] Functions that aren't obvious have detailed comments on why and how they do things
+- [x] Before hook cleans up previous tests
+- [x] Checks that crucial UI components are visible (not hidden under some other element)
+
+**Stuff I want to do, but again I spent too much time already**
+- [ ] Create a function to find a task by name (commonly used -- currently this is 2 lines of code, when it could be one)
+- [ ] Extra validation of the description (see comments)
+- [ ] Extract creds into protected `.env` file
+- [ ] Other helper functions that are common to help readability (like checking for a toast notification)
+- [ ] Probably others I forget, I always have crazy ideas to improve stuff
+
 ## Bugs found & fixed
 I should mention I didn't spend much time manually QAing the software, mostly just focused on areas that were broken for the automation. I could have spent more time manually trying to break this app, but I didn't want to spend much more time on this test than recommended.
 ### 1) Any page that was not 0 showed the contents of page n + 1
